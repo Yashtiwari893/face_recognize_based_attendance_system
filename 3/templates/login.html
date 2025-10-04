@@ -1,27 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title text-center mb-4">Login</h3>
-                {% if error %}
-                    <div class="alert alert-danger">{{ error }}</div>
-                {% endif %}
-                <form method="post">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="col-md-6 col-lg-4">
+            <div class="card p-3">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-person-bounding-box" style="font-size: 3rem; color: var(--cta-color);"></i>
+                        <h3 class="card-title mt-2">Welcome Back!</h3>
+                        <p class="text-secondary">Login to access your dashboard.</p>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
+
+                    {% if error %}
+                        <div class="alert alert-danger text-center" role="alert" style="background-color: rgba(233, 69, 96, 0.1); border: 1px solid var(--cta-color); color: #e94560;">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
