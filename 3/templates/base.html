@@ -1,33 +1,132 @@
 <!doctype html>
-<html lang="en">
-<head>
+<html lang="en" data-bs-theme="dark"> <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Attendance System{% endblock %}</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #f8f9fa; }
-        .navbar { background-color: #343a40; }
-        .card { margin-top: 20px; }
+        /* CSS Variables for our Dark Theme */
+        :root {
+            --dark-bg: #1a1a2e;        /* गहरा नीला बैकग्राउंड */
+            --dark-card: #16213e;      /* कार्ड का रंग */
+            --primary-accent: #0f3460; /* प्राइमरी एक्सेंट */
+            --cta-color: #e94560;       /* Call-to-action बटन का रंग */
+            --text-primary: #e0e0e0;   /* हल्का टेक्स्ट */
+            --text-secondary: #a0a0a0; /* थोड़ा गहरा टेक्स्ट */
+            --border-color: #2a2a4a;
+        }
+
+        /* Poori website par naya font aur background apply karein */
+        body { 
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+        }
+
+        /* Navbar ko naya look dein */
+        .navbar { 
+            background-color: var(--dark-card);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar-brand {
+            font-weight: 700;
+        }
+
+        /* Cards ko naya dark theme dein */
+        .card {
+            background-color: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Buttons ko attractive banayein */
+        .btn-primary {
+            background-color: var(--cta-color);
+            border-color: var(--cta-color);
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #ff5a75; /* Hover पर थोड़ा हल्का रंग */
+            border-color: #ff5a75;
+        }
+        .btn-success {
+            background-color: var(--primary-accent);
+            border-color: var(--primary-accent);
+        }
+
+        /* Form elements ko style karein */
+        .form-control {
+            background-color: var(--primary-accent);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .form-control:focus {
+            background-color: var(--primary-accent);
+            border-color: var(--cta-color);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 0.25rem rgba(233, 69, 96, 0.25);
+        }
+        .form-label {
+            color: var(--text-secondary);
+        }
+
+        /* Table ko dark theme dein */
+        .table {
+            --bs-table-bg: var(--dark-card);
+            --bs-table-border-color: var(--border-color);
+            --bs-table-striped-bg: #1f2d4d;
+            --bs-table-hover-bg: #2a3b5e;
+        }
+        .table-dark {
+            --bs-table-bg: var(--primary-accent);
+        }
+
+        /* Alert messages */
+        .alert-success {
+            background-color: rgba(26, 188, 156, 0.1);
+            color: #1abc9c;
+            border: 1px solid #1abc9c;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Attendance System</a>
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <i class="bi bi-person-bounding-box"></i>
+                Attendance System
+            </a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if session.username %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                            <a class="nav-link" href="{{ url_for('logout') }}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Logout
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container">
+    <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
