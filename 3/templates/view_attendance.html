@@ -1,39 +1,97 @@
 {% extends 'base.html' %}
 {% block title %}Today's Attendance{% endblock %}
 {% block content %}
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Today's Attendance ({{ datetoday }})</h2>
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>S.No</th>
-                <th>Name</th>
-                <th>ID</th>
-                <th>In Time</th>
-                <th>Out Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {# Yahan 'l' ko 'total_records' se badal diya gaya hai #}
-            {% if total_records > 0 %}
-                {% for record in attendance_records %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ record.Username }}</td>
-                    <td>{{ record.UserID }}</td>
-                    <td>{{ record.In_Time }}</td>
-                    <td>{{ record.Out_Time }}</td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="5" class="text-center">No attendance marked yet today.</td>
-                </tr>
-            {% endif %}
-        </tbody>
-    </table>
-    <div class="text-center mt-3">
-        <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Dashboard</a>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-0">Today's Attendance</h2>
+        <p class="text-secondary">Date: {{ datetoday }}</p>
+    </div>
+    <a href="{{ url_for('home') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <div class="card-body">
+                <i class="bi bi-people-fill" style="font-size: 2.5rem; color: var(--cta-color);"></i>
+                <h3 class="card-title mt-2">{{ total_records }}</h3>
+                <p class="card-text text-secondary">Total Present Users</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <div class="card-body">
+                <i class="bi bi-box-arrow-in-right" style="font-size: 2.5rem; color: var(--cta-color);"></i>
+                {% set users_in = attendance_records|selectattr('In_Time')|list|length %}
+                <h3 class="card-title mt-2">{{ users_in }}</h3>
+                <p class="card-text text-secondary">Users Punched IN</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <div class="card-body">
+                <i class="bi bi-box-arrow-out-right" style="font-size: 2.5rem; color: var(--cta-color);"></i>
+                {% set users_out = attendance_records|selectattr('Out_Time')|reject('equalto', '')|list|length %}
+                <h3 class="card-title mt-2">{{ users_out }}</h3>
+                <p class="card-text text-secondary">Users Punched OUT</p>
+            </div>
+        </div>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-3">Attendance Log</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>User ID</th>
+                        <th>IN Time</th>
+                        <th>OUT Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if total_records > 0 %}
+                        {% for record in attendance_records %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><i class="bi bi-person-circle me-2"></i>{{ record.Username }}</td>
+                            <td>{{ record.UserID }}</td>
+                            <td><span class="badge bg-success bg-opacity-25 text-success">{{ record.In_Time }}</span></td>
+                            <td>
+                                {% if record.Out_Time %}
+                                    <span class="badge bg-danger bg-opacity-25 text-danger">{{ record.Out_Time }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary bg-opacity-25 text-secondary">Not Marked</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if record.Out_Time %}
+                                    <span class="text-success">Completed</span>
+                                {% else %}
+                                    <span class="text-warning">Present</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">No attendance marked yet today.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -1,38 +1,50 @@
 {% extends 'base.html' %}
 {% block title %}Add New User{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title text-center mb-4">Add New User</h3>
-                {% if error %}
-                    <div class="alert alert-danger">{{ error }}</div>
-                {% endif %}
-                <form method="post" action="{{ url_for('add_user') }}">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="col-md-7 col-lg-5">
+            <div class="card p-3">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-person-plus-fill" style="font-size: 3rem; color: var(--cta-color);"></i>
+                        <h3 class="card-title mt-2">Create New User</h3>
+                        <p class="text-secondary">Fill the details to register a new user.</p>
                     </div>
-                     <div class="mb-3">
-                        <label for="userid" class="form-label">User ID (Roll Number)</label>
-                        <input type="number" class="form-control" id="userid" name="userid" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select" id="role" name="role">
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Add User & Capture Face</button>
-                    </div>
-                </form>
+
+                    {% if error %}
+                        <div class="alert alert-danger text-center" role="alert" style="background-color: rgba(233, 69, 96, 0.1); border: 1px solid var(--cta-color); color: #e94560;">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    
+                    <form method="post" action="{{ url_for('add_user') }}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                         <div class="mb-3">
+                            <label for="userid" class="form-label">User ID (Roll Number)</label>
+                            <input type="number" class="form-control" id="userid" name="userid" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role" name="role">
+                                <option value="user" selected>User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-person-plus"></i> Add User & Capture Face
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
