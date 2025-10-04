@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}User Dashboard{% endblock %}
+{% block content %}
+
+{# Yahan message dikhane ke liye code add kiya gaya hai #}
+{% if message %}
+<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">User Dashboard</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Welcome, {{ username }}!</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="{{ url_for('take_attendance') }}" class="btn btn-success btn-lg px-4 gap-3">Mark My Attendance</a>
+            <a href="{{ url_for('view_attendance') }}" class="btn btn-outline-secondary btn-lg px-4">View Today's Attendance</a>
+        </div>
+    </div>
+</div>
+
+{# YEH LINE MISSING THI #}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Mark Attendance{% endblock %}
+{% block content %}
+<div class="container text-center mt-4">
+    <h2 class="mb-4" id="page-title">Marking Your Attendance...</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card bg-dark">
+                <img src="{{ url_for('video_feed') }}" width="100%" class="rounded" id="video-stream">
+            </div>
+            <p class="mt-3 text-muted" id="instruction-text">Please wait, camera is starting...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const videoStream = document.getElementById('video-stream');
+    let hasRedirected = false; // Flag to prevent multiple redirects
+
+    // Main function to redirect
+    function redirectToDashboard() {
+        // Redirect sirf tabhi karein agar pehle nahi kiya hai
+        if (!hasRedirected) {
+            hasRedirected = true;
+            console.log("Stream ended or timed out. Redirecting to dashboard...");
+            window.location.href = "{{ url_for('user_dashboard', message='Attendance session finished!') }}";
+        }
+    }
+
+    // Tareeka 1: Stream ke band hone par (onerror) redirect karein (Fastest method)
+    videoStream.onerror = function() {
+        redirectToDashboard();
+    };
+
+    // Tareeka 2: Ek safety-net timeout. 
+    // Agar onerror kaam na kare, to 10 second baad ye redirect kar dega.
+    // Aapke app.py me timeout 20 second ka hai, isliye isse thoda zyada rakha hai.
+    setTimeout(redirectToDashboard, 5000);
+
+    // Jaise hi video ka pehla frame load ho, instruction text badal do
+    videoStream.onload = function() {
+        document.getElementById('instruction-text').innerText = 'Aapka chehra camera ke saamne rakhein...';
+    };
+</script>
+{% endblock %}

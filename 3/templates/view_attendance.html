@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Today's Attendance{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Today's Attendance ({{ datetoday }})</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# Yahan 'l' ko 'total_records' se badal diya gaya hai #}
+            {% if total_records > 0 %}
+                {% for record in attendance_records %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ record.Username }}</td>
+                    <td>{{ record.UserID }}</td>
+                    <td>{{ record.In_Time }}</td>
+                    <td>{{ record.Out_Time }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">No attendance marked yet today.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="text-center mt-3">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
